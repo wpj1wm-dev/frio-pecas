@@ -205,17 +205,19 @@
             <div class="tab-content-wrapper">
 
                 <!-- Introdução -->
-                <section class="tab-content active" data-tab-content="intro">
-                    <img
-                            src="https://github.com/wpj1wm-dev/frio-pecas/blob/main/Capa.png"
+                <section class="tab-content active p-4 md:p-8" data-tab-content="intro">
+                    <!-- Div para centralizar e dar padding à imagem -->
+                    <div class="flex justify-center items-center w-full min-h-screen">
+                        <img
+                            src="https://raw.githubusercontent.com/wpj1wm-dev/frio-pecas/main/Capa.png"
                             alt="Imagem da Capa do Projeto Frio Peças"
                             class="max-w-full h-auto rounded-xl shadow-2xl transition duration-300 hover:scale-[1.01] border-4 border-indigo-600/50"
                             style="max-height: 85vh;"
                             onerror="this.src='https://placehold.co/600x400/4F46E5/ffffff?text=IMAGEM+NAO+ENCONTRADA+Verifique+o+link+RAW'"
                         />
-                     </div>
+                    </div>
                 </section>
-
+                
                 <!-- TDD -->
                 <section class="tab-content" data-tab-content="tdd">
                     <iframe
@@ -303,6 +305,7 @@
     </script>
 </body>
 </html>
+
 
 
 
