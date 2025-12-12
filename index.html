@@ -5,6 +5,12 @@
     <title>Painel de Análises Tributárias</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Estilo do widget de chat do n8n -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css"
+        rel="stylesheet"
+    />
+
     <style>
         * {
             box-sizing: border-box;
@@ -155,6 +161,92 @@
             height: 100%;
             border: none;
         }
+
+        /* Ajustes específicos para a aba do chat */
+        [data-tab-content="chat"] {
+            padding: 0;
+        }
+
+        #n8n-chat {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ====== SUBMENUS DENTRO DE "INTELIGÊNCIA ARTIFICIAL" ====== */
+
+        .tab-content.ia-tab {
+            display: none;
+        }
+
+        .tab-content.ia-tab.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ia-sub-tabs {
+            display: flex;
+            gap: 6px;
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(55, 65, 81, 0.9);
+            background: #020617;
+        }
+
+        .ia-sub-btn {
+            border: none;
+            background: #020617;
+            color: #9ca3af;
+            padding: 6px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(75, 85, 99, 0.8);
+            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s;
+            white-space: nowrap;
+        }
+
+        .ia-sub-btn:hover {
+            background: #111827;
+            color: #e5e7eb;
+            transform: translateY(-1px);
+        }
+
+        .ia-sub-btn.active {
+            background: #1f2937;
+            color: #f9fafb;
+            border-color: #38bdf8;
+        }
+
+        .ia-inner-content-wrapper {
+            flex: 1;
+            position: relative;
+            padding: 10px;
+        }
+
+        .ia-tab-content {
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+            background: #020617;
+        }
+
+        .ia-tab-content.active {
+            display: block;
+        }
+
+        .ia-simulacoes-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            font-size: 0.95rem;
+        }
     </style>
 </head>
 <body>
@@ -189,7 +281,7 @@
                     <span class="dot"></span>
                     Operações Intercompany
                 </button>
-
+                
                 <button class="tab-button" data-tab="bloco-k" role="tab" aria-selected="false">
                     <span class="dot"></span>
                     Bloco K
@@ -199,6 +291,13 @@
                     <span class="dot"></span>
                     Demais Análises
                 </button>
+
+                <!-- NOVA ÚLTIMA ABA: INTELIGÊNCIA ARTIFICIAL -->
+                <button class="tab-button" data-tab="ia" role="tab" aria-selected="false">
+                    <span class="dot"></span>
+                    Reforma Tributária
+                </button>
+
             </nav>
 
             <!-- Conteúdo das abas -->
@@ -206,20 +305,11 @@
 
                 <!-- Introdução -->
                 <section class="tab-content active p-4 md:p-8" data-tab-content="intro">
-                    <!-- 
-                        O contêiner 'div' garante que temos 100% de largura (w-full).
-                        A classe 'w-full' na tag <img> força a imagem a ocupar essa largura total. 
-                    -->
                     <div class="flex justify-center items-start w-full h-auto">
                         <img
                             src="https://raw.githubusercontent.com/wpj1wm-dev/frio-pecas/main/Capa.png"
                             alt="Imagem da Capa do Projeto Frio Peças"
-                            
-                            <!-- ALTERAÇÃO CRÍTICA: Mudamos de 'max-w-full' para 'w-full' para preencher 100% -->
-                            <!-- Também simplifiquei o estilo para garantir que não haja bordas ou cantos que limitem o preenchimento -->
                             class="w-full h-auto shadow-xl transition duration-300"
-                            
-                            <!-- REMOVIDA A RESTRIÇÃO DE ALTURA (max-height: 85vh) que estava limitando a largura -->
                             onerror="this.src='https://placehold.co/1200x600/4F46E5/ffffff?text=IMAGEM+NAO+ENCONTRADA+Verifique+o+link+RAW'"
                         />
                     </div>
@@ -257,12 +347,53 @@
                         src="https://app.powerbi.com/reportEmbed?reportId=24aa8ba5-2827-4a3b-a0ce-5862aa579a04&autoAuth=true&ctid=18fd44de-f8a4-45e0-b2f5-8e258ac0e6ee&actionBarEnabled=true&reportCopilotInEmbed=true">
                     </iframe>
                 </section>
+
+                <!-- INTELIGÊNCIA ARTIFICIAL (com submenus) -->
+                <section class="tab-content ia-tab" data-tab-content="ia">
+
+                    <!-- Submenus -->
+                    <div class="ia-sub-tabs">
+                        <button class="ia-sub-btn active" data-ia-tab="chat">
+                            Chat - Agente IA
+                        </button>
+                        <button class="ia-sub-btn" data-ia-tab="analise-op">
+                            Análise Operações
+                        </button>
+                        <button class="ia-sub-btn" data-ia-tab="simulacoes">
+                            Simulações
+                        </button>
+                    </div>
+
+                    <!-- Conteúdo dos submenus -->
+                    <div class="ia-inner-content-wrapper">
+                        <!-- Chat - Agente IA -->
+                        <div class="ia-tab-content active" data-ia-tab-content="chat">
+                            <div id="n8n-chat"></div>
+                        </div>
+
+                        <!-- Análise Operações -->
+                        <div class="ia-tab-content" data-ia-tab-content="analise-op">
+                            <iframe
+                                class="report-frame"
+                                src="dashboard_reforma_friopecas.html">
+                            </iframe>
+                        </div>
+
+                        <!-- Simulações (sem link por enquanto) -->
+                        <div class="ia-tab-content" data-ia-tab-content="simulacoes">
+                            <div class="ia-simulacoes-placeholder">
+                                Área de simulações da Reforma em desenvolvimento....
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
             </div>
         </div>
     </div>
 
     <script>
-        // Lógica das abas
+        // Lógica das abas principais
         const tabButtons = document.querySelectorAll(".tab-button");
         const tabContents = document.querySelectorAll(".tab-content");
 
@@ -277,6 +408,28 @@
                 // Atualiza conteúdos
                 tabContents.forEach(content => {
                     const tabName = content.getAttribute("data-tab-content");
+                    if (tabName === target) {
+                        content.classList.add("active");
+                    } else {
+                        content.classList.remove("active");
+                    }
+                });
+            });
+        });
+
+        // Lógica dos submenus da aba "Inteligência Artificial"
+        const iaSubButtons = document.querySelectorAll(".ia-sub-btn");
+        const iaTabContents = document.querySelectorAll(".ia-tab-content");
+
+        iaSubButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                const target = button.getAttribute("data-ia-tab");
+
+                iaSubButtons.forEach(btn => btn.classList.remove("active"));
+                button.classList.add("active");
+
+                iaTabContents.forEach(content => {
+                    const tabName = content.getAttribute("data-ia-tab-content");
                     if (tabName === target) {
                         content.classList.add("active");
                     } else {
@@ -310,7 +463,38 @@
 
         document.addEventListener("fullscreenchange", updateFullscreenButton);
     </script>
+
+    <!-- Script do widget de chat (ESM) -->
+    <script type="module">
+        import { createChat } from "https://cdn.jsdelivr.net/npm/@n8n/chat@latest/+esm";
+    
+        createChat({
+            webhookUrl: "https://wpj1wm.app.n8n.cloud/webhook/ddf4ea5b-94fc-4fbf-b856-95d39a04eb59/chat",
+            target: "#n8n-chat",
+            mode: "fullscreen",
+    
+            showWelcomeScreen: true,
+            defaultLanguage: "pt",
+    
+            // >>> MENSAGENS INICIAIS (bubbles do bot)
+            initialMessages: [
+                "Olá! 👋",
+                "Meu nome é Agente LC214. Como posso te ajudar hoje?"
+            ],
+    
+            // >>> TEXTOS DA TELA (título, subtítulo, placeholder etc.)
+            i18n: {
+                pt: {
+                    title: "Agente de IA Tributário",
+                    subtitle: "Treinado com base na Reforma Tributária (LC 214/2025) 👋",
+                    footer: "",
+                    getStarted: "Nova conversa",
+                    inputPlaceholder: "Digite sua pergunta..."
+                }
+            }
+        });
+    </script>
+
 </body>
 </html>
-
 
