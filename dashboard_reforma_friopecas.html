@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Reforma Tributária - FrioPeças</title>
+<style>
+    :root {
+        --bg-main: #050816;
+        --bg-card: #0b1120;
+        --bg-soft: #020617;
+        --border-subtle: #1f2937;
+        --text-main: #e5e7eb;
+        --text-muted: #9ca3af;
+        --accent: #38bdf8;
+        --accent-soft: rgba(56, 189, 248, 0.12);
+    }
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top left, #022c22 0, #020617 30%, #020617 100%);
+        color: var(--text-main);
+        padding: 32px 12px 40px;
+    }
+    .page {
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+    header {
+        margin-bottom: 28px;
+    }
+    .badge-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+    }
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(37, 99, 235, 0.16));
+        color: var(--accent);
+        border: 1px solid rgba(56, 189, 248, 0.4);
+    }
+    .badge span.dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.3);
+    }
+    h1 {
+        font-size: 26px;
+        margin: 0 0 6px;
+        letter-spacing: -0.02em;
+    }
+    .subtitle {
+        font-size: 14px;
+        color: var(--text-muted);
+        max-width: 880px;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+        gap: 16px;
+    }
+    @media (max-width: 1024px) {
+        .grid {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+    .chart-card {
+        background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.06), #020617 55%);
+        border-radius: 18px;
+        border: 1px solid var(--border-subtle);
+        padding: 14px 14px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.8);
+    }
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .chart-title-block h2 {
+        font-size: 15px;
+        margin: 0 0 2px;
+    }
+    .chart-title-block p {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin: 0;
+    }
+    .pill {
+        font-size: 11px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.6);
+        background: rgba(15, 23, 42, 0.9);
+        white-space: nowrap;
+    }
+    .chart-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); /* gráfico fica 60% maior */
+    gap: 18px;
+    align-items: stretch;
+    }
+    @media (max-width: 768px) {
+        .chart-body {
+            grid-template-columns: minmax(0, 1fr);
+        }
+    }
+    figure {
+        margin: 0;
+        padding: 0;
+        background: #020617;
+        border-radius: 12px;
+        border: 1px solid rgba(15,23,42,0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+	min-height: 260px;   /* aumenta perceptivelmente a área do gráfico */
+    }
+    figure img {
+    	display: block;
+    	width: 100%;
+    	height: 100%;
+    }
+    .analysis h3 {
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+        margin: 0 0 6px;
+    }
+    .analysis p {
+        font-size: 12px;
+        color: var(--text-muted);
+        line-height: 1.5;
+        margin: 0 0 4px;
+    }
+    footer {
+        margin-top: 22px;
+        font-size: 11px;
+        color: #6b7280;
+        text-align: right;
+    }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+    <div class="badge-row">
+        <div class="badge">
+            <span class="dot"></span>
+            <span>FrioPeças · Reforma Tributária (IBS/CBS)</span>
+        </div>
+        <div style="font-size:11px; color:var(--text-muted);">
+            Base analisada: EFD ICMS/IPI · Período 01/05/2025 a 31/05/2025 · Receita de saídas: R$ 797.285.316,27
+        </div>
+    </div>
+    <h1>Visão Executiva – Impactos da Reforma Tributária nas Operações da FrioPeças</h1>
+    <p class="subtitle">
+        Painel analítico com simulação de IBS/CBS sobre a base da EFD, destacando carga atual x simulada, CFOPs e UFs críticas,
+        qualidade de cadastros fiscais e diferenças entre segmentos B2B/B2C. As análises são indicativas e dependem de premissas
+        ainda sujeitas à regulamentação da reforma.
+    </p>
+</header>
+
+<main class="grid">
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>1. Carga Tributária Atual x IBS/CBS (26%)</h2>
+            <p>Comparação consolidada da carga de ICMS + PIS + COFINS versus um cenário de IBS/CBS com alíquota combinada de 26%.</p>
+        </div>
+    </div>
+    <div class="chart-body">
+        <figure>
+            <img src="friopecas_chart1_carga_total.png" alt="Carga Atual x IBS/CBS">
+        </figure>
+        <div class="analysis">
+            <h3>Análise</h3>
+            <p>
+                A receita total de saídas no período analisado foi de R$ 797.285.316,27. A carga tributária atual de
+                ICMS, PIS e COFINS sobre essas operações soma R$ 328.040.774,79, o que representa uma alíquota efetiva
+                em torno de 41% sobre o valor dos itens faturados.
+            </p>
+            <p>
+                No cenário simulado de IBS/CBS a 26% ad valoren, a carga cairia para R$ 207.294.182,23, ou seja, uma redução
+                aproximada de R$ 120.746.592,56 em termos absolutos, equivalente a 36.8% a menos de
+                desembolso tributário nas saídas, mantida a mesma base de cálculo.
+            </p>
+            <p>
+                Essa visão consolidada indica um potencial alívio significativo na carga das operações de venda,
+                reforçando a importância de antecipar ajustes de cadastros e processos para capturar corretamente
+                os créditos e não sofrer glosas na nova sistemática.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>2. Top CFOP de Saída – Carga Atual x IBS/CBS</h2>
+            <p>Comparativo por CFOP com maior participação na receita, destacando onde a reforma tende a aliviar ou pressionar a carga.</p>
+        </div>
+    </div>
+    <div class="chart-body">
+        <figure>
+            <img src="friopecas_chart2_cfop_top6.png" alt="Top CFOP Saídas">
+        </figure>
+        <div class="analysis">
+            <h3>Análise</h3>
+            <p>
+                Os CFOPs 6108 e 6102 concentram a maior parte da receita de saídas e, no cenário atual, carregam
+                uma tributação significativamente superior ao IBS/CBS simulado a 26%. Nesses fluxos, a reforma aparece
+                como forte candidata a reduzir a carga, melhorando a margem das operações mais relevantes do negócio.
+            </p>
+            <p>
+                Por outro lado, CFOPs específicos com carga hoje muito baixa, como 5405 e 6923, tendem a sofrer
+                aumento na transição para o IBS/CBS, pois passariam a suportar uma alíquota uniforme sobre a receita.
+                São operações que demandam mapeamento fino, pois podem esconder riscos relevantes de aumento de custo.
+            </p>
+            <p>
+                A recomendação é priorizar o detalhamento dos principais CFOPs de venda, avaliando contratos,
+                benefícios vigentes e eventuais regimes especiais para desenhar estratégias de neutralidade ou de
+                ganho competitivo na nova estrutura tributária.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>3. Receita por UF de Destino (Top 10)</h2>
+            <p>Distribuição geográfica da receita de saídas, com foco nos estados que mais recebem mercadorias da FrioPeças.</p>
+        </div>
+    </div>
+    <div class="chart-body">
+        <figure>
+            <img src="friopecas_chart3_uf_top10.png" alt="Receita por UF">
+        </figure>
+        <div class="analysis">
+            <h3>Análise</h3>
+            <p>
+                O Espírito Santo responde por mais de um terço da receita do período, seguido por Minas Gerais,
+                São Paulo e Rio de Janeiro. A concentração em poucos estados torna ainda mais relevante compreender
+                como cada UF será afetada pela mudança para a tributação no destino.
+            </p>
+            <p>
+                Na lógica do IBS, a arrecadação tende a se deslocar para o estado de consumo, o que pode alterar
+                a atratividade de determinadas operações e centros de distribuição. Monitorar de perto a legislação
+                complementar dessas UFs será essencial para preservar competitividade e mitigar riscos.
+            </p>
+            <p>
+                Recomenda-se um aprofundamento por UF e por tipo de cliente, cruzando o mapa de vendas com
+                eventuais tratamentos setoriais previstos na regulamentação da reforma.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>4. Qualidade de Cadastro – Validação de CFOP</h2>
+            <p>Quantitativo de itens marcados como compatíveis ou incompatíveis segundo a lógica de validação de CFOP aplicada.</p>
+        </div>
+    </div>
+    <div class="chart-body">
+        <figure>
+            <img src="friopecas_chart4_valid_cfop.png" alt="Validação CFOP">
+        </figure>
+        <div class="analysis">
+            <h3>Análise</h3>
+            <p>
+                A maior parte dos itens foi classificada como “CFOP incompatível” pela rotina de validação,
+                o que indica um passivo expressivo de revisão cadastral antes da entrada em vigor do IBS/CBS.
+                Mesmo que parte dessa marcação decorra de regras conservadoras do validador, o volume chama atenção.
+            </p>
+            <p>
+                Em um ambiente de maior automação fiscal e cruzamento eletrônico de dados, CFOPs fora do padrão
+                tendem a gerar notificações, glosas de créditos e autuações. Priorizar a saneamento dessa base é
+                uma etapa crítica do projeto de adequação à reforma.
+            </p>
+            <p>
+                Sugere-se consolidar uma trilha de ajustes por família de operações, revisitando fluxos de compra,
+                venda, devolução e bonificação, alinhando CFOP, CST e tratamento tributário esperado no IBS/CBS.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>5. Qualidade de Cadastro – Validação de NCM x Item</h2>
+            <p>Proporção de itens com NCM considerado compatível ou incompatível em relação à descrição dos produtos.</p>
+        </div>
+    </div>
+    <div class="chart-body">
+        <figure>
+            <img src="friopecas_chart5_valid_ncm.png" alt="Validação NCM x Item">
+        </figure>
+        <div class="analysis">
+            <h3>Análise</h3>
+            <p>
+                Aproximadamente dois terços dos itens são classificados como compatíveis em NCM x descrição, enquanto
+                cerca de um terço apresenta algum tipo de incompatibilidade. Para a lógica de IBS/CBS, a aderência
+                do NCM será ainda mais relevante, tanto para definição de alíquota quanto para condições de crédito.
+            </p>
+            <p>
+                Itens com NCM questionável podem comprometer a apuração correta de créditos e débitos, além de gerar
+                riscos de reclassificação e cobrança retroativa. O esforço de saneamento de NCM deve caminhar em paralelo
+                com a revisão de CFOPs e regras de cálculo.
+            </p>
+            <p>
+                Recomenda-se cruzar este diagnóstico com a materialidade de cada item (volume e valor), priorizando
+                aqueles que concentram a maior parcela da receita e do crédito potencial no novo modelo tributário.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>6. Cenários de IBS/CBS por Alíquota</h2>
+            <p>Simulação da carga de IBS/CBS para diferentes alíquotas globais sobre a receita de saídas, comparada à carga atual.</p>
+        </div>
+    </div>
+    <div class="chart-body">
+        <figure>
+            <img src="friopecas_chart6_cenarios_aliquota.png" alt="Cenários de Alíquota IBS/CBS">
+        </figure>
+        <div class="analysis">
+            <h3>Análise</h3>
+            <p>
+                Foram considerados três cenários de alíquota total de IBS/CBS: 24%, 26% e 28%. Em todos eles, a carga
+                simulada permanece abaixo da carga atual consolidada de ICMS, PIS e COFINS, embora a diferença se reduza
+                à medida que a alíquota aumenta.
+            </p>
+            <p>
+                Essa sensibilidade mostra que pequenas variações na alíquota de referência do IBS/CBS podem alterar
+                significativamente o ganho ou perda da empresa com a reforma. Por isso, é importante acompanhar com
+                atenção a definição final das alíquotas de referência pelo legislador.
+            </p>
+            <p>
+                Um próximo passo natural é estender a simulação para a ótica líquida, incorporando créditos das entradas
+                e eventuais tratamentos diferenciados por setor, para mensurar com mais precisão o impacto econômico
+                final para a FrioPeças.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="chart-card">
+    <div class="chart-header">
+        <div class="chart-title-block">
+            <h2>7. Carga Atual x IBS/CBS – B2B x B2C</h2>
+            <p>Comparativo da carga tributária entre clientes pessoa jurídica (B2B) e pessoa física (B2C), com base no CPF/CNPJ.</p>
+        </div>
+    </div>
+    <div class="chart-body">
+        <figure>
+            <img src="friopecas_chart7_b2b_b2c.png" alt="B2B x B2C">
+        </figure>
+        <div class="analysis">
+            <h3>Análise</h3>
+            <p>
+                A segmentação simples por CPF/CNPJ indica volumes distintos de receita e carga tributária entre B2B e B2C,
+                com predominância das operações com pessoa jurídica. No cenário IBS/CBS a 26%, ambos os segmentos tendem
+                a experimentar redução de carga, mas em intensidades diferentes.
+            </p>
+            <p>
+                Como o IBS/CBS será um tributo sobre o consumo, operações B2C ganham relevância na análise de repasse
+                de preços e elasticidade de demanda. Já no B2B, a correta apropriação de créditos será crucial para evitar
+                acúmulo de saldo e impactos no capital de giro.
+            </p>
+            <p>
+                Recomenda-se aprofundar este recorte, integrando informações de cadastro de clientes (porte, CNAE, UF) para
+                desenhar estratégias diferenciadas de precificação, descontos e políticas comerciais na transição para o novo sistema.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="chart-card">
+  <div class="chart-header">
+    <div class="chart-title-block">	
+    <h2>8. Pareto de CFOP – onde a reforma mais “bate”</h2>
+    <p>Concentração da receita (VL_ITEM) por CFOP a partir do C170, para priorizar as operações com maior materialidade na simulação IBS/CBS.</p>
+    </div>
+  </div>
+  <div class="chart-body">
+    <figure>
+      <img src="friopecas_chart8_pareto_cfop.png" alt="Pareto de CFOP por Receita">
+    </figure>
+    <div class="analysis">
+      <h3>Análise</h3>
+      <p>
+        A base analisada soma <b>R$ 1.174.072.129,64</b> em VL_ITEM. Os <b>15 CFOPs</b> mais relevantes concentram <b>93,5%</b> dessa receita,
+        o que permite focar a revisão (cadastro/tributação/preço) em um número pequeno de naturezas de operação.
+      </p>
+      <p>
+        No cenário de referência (IBS/CBS 26%), a carga total estimada sobe de <b>R$ 155.782.682,72</b> para <b>R$ 305.258.753,71</b>
+        (Δ <b>R$ 149.476.070,99</b>, equivalente a <b>12,7%</b> da receita e <b>96,0%</b> sobre a carga atual).
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="chart-card">
+  <div class="chart-header">
+    <div class="chart-title-block">
+    <h2>9. Heatmap CFOP x UF – hotspots de impacto (Δ IBS/CBS 26%)</h2>
+    <p>Matriz de impacto por combinação de CFOP e UF (top materialidade), medindo a variação estimada: IBS/CBS 26% menos (ICMS+PIS+COFINS).</p>
+    </div>
+  </div>
+  <div class="chart-body">
+    <figure>
+      <img src="friopecas_chart9_heatmap_cfop_uf_delta26.png" alt="Heatmap CFOP x UF - Delta 26%">
+    </figure>
+    <div class="analysis">
+      <h3>Análise</h3>
+      <p>
+        O heatmap evidencia “pontos quentes” onde a reforma tende a alterar mais a carga.
+        A maior variação positiva (entre os top itens exibidos) aparece em <b>CFOP 2102</b> para <b>Amazonas</b>:
+        Δ <b>R$ 24.702.782,11</b>.
+      </p>
+      <p>
+        Já a menor variação (potencial alívio relativo) aparece em <b>CFOP 5102</b> para <b>Paraíba</b>:
+        Δ <b>R$ -219.020,19</b>. Use isso para direcionar renegociação de preço e revisão de regras por UF/CFOP.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="chart-card">
+  <div class="chart-header">
+    <div class="chart-title-block">
+    <h2>10. Histograma – alíquota efetiva atual (ICMS+PIS+COFINS)</h2>
+    <p>Distribuição da carga efetiva atual por item (C170): (ICMS + PIS + COFINS) / VL_ITEM. Ajuda a enxergar dispersões e “ilhas” de tributação.</p>
+    </div>
+  </div>
+  <div class="chart-body">
+    <figure>
+      <img src="friopecas_chart10_hist_aliquota_efetiva_atual.png" alt="Histograma alíquota efetiva atual">
+    </figure>
+    <div class="analysis">
+      <h3>Análise</h3>
+      <p>
+        No consolidado, a alíquota efetiva média atual é <b>13,3%</b> (carga atual <b>R$ 155.782.682,72</b> sobre receita <b>R$ 1.174.072.129,64</b>).
+        Na distribuição por item, os percentis indicam: P25 <b>7,0%</b>, Mediana <b>19,6%</b>, P75 <b>20,9%</b>,
+        P90 <b>25,9%</b> e P95 <b>27,4%</b>.
+      </p>
+      <p>
+        Quanto maior a “cauda” de itens com alíquota efetiva baixa, maior tende a ser o salto relativo ao migrar para uma alíquota uniforme (ex.: 26%).
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="chart-card">
+  <div class="chart-header">
+    <div class="chart-title-block">
+    <h2>11. Waterfall – decomposição do salto (Atual → IBS/CBS 26%)</h2>
+    <p>Explica, em linguagem executiva, de onde vem a diferença total ao comparar a carga atual versus o cenário IBS/CBS 26%.</p>
+    </div>
+  </div>
+  <div class="chart-body">
+    <figure>
+      <img src="friopecas_chart11_waterfall_delta26_cfop.png" alt="Waterfall delta por CFOP">
+    </figure>
+    <div class="analysis">
+      <h3>Análise</h3>
+      <p>
+        O aumento total estimado no cenário IBS/CBS 26% é de <b>R$ 149.476.070,99</b>.
+        Só os <b>5 CFOPs</b> com maior contribuição explicam <b>63,1%</b> dessa variação,
+        reforçando que o “problema” (ou oportunidade) tende a estar concentrado em poucas naturezas de operação.
+      </p>
+      <p>
+        Recomenda-se usar este gráfico como “slide de abertura” nas discussões com diretoria, pois ele conecta o número final às suas causas.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="chart-card">
+  <div class="chart-header">
+    <div class="chart-title-block">
+    <h2>12. Mapa de risco por NCM – materialidade x Δ% (IBS/CBS 26%)</h2>
+    <p>Mapa para priorização: no eixo X a materialidade (VL_ITEM, log) e no eixo Y a variação percentual sobre a carga atual, por NCM (top materialidade).</p>
+    </div>
+  </div>
+  <div class="chart-body">
+    <figure>
+      <img src="friopecas_chart12_mapa_risco_ncm_delta_pct26.png" alt="Mapa de risco por NCM">
+    </figure>
+    <div class="analysis">
+      <h3>Análise</h3>
+      <p>
+        NCMs de alta materialidade e Δ% positivo elevado devem entrar primeiro no plano de ação (precificação, mix, política comercial e revisão fiscal).
+        Entre os maiores deltas absolutos (26%), destacam-se:
+        <b>84151011</b> (Δ R$ 57.509.705,82),
+        <b>84159020</b> (Δ R$ 18.853.191,69) e
+        <b>84159010</b> (Δ R$ 10.711.102,19).
+      </p>
+      <p>
+        Use a linha zero como separador: acima dela, tende a haver aumento de carga; abaixo, potencial redução relativa (dependendo de créditos, que devem ser refinados com entradas).
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+</main>
+
+<footer>
+    FrioPeças · Reforma Tributária IBS/CBS – Dashboard consolidado de mapeamento e simulação fiscal (base EFD · 05/2025).
+</footer>
+</div>
+</body>
+</html>
